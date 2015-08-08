@@ -1,0 +1,12 @@
+#  What still needs doing:
+#
+#  Re-image a new micro-SD card with a pristine Raspbian install, and determine EXACTLY what else needs
+#  installing to make this work.
+#  Update notes accordingly.
+#  
+#  Add a ->read_vector() method, for reading A-to-D converters and similar.
+#
+#  Turn explanatory comments into proper POD.
+#
+#  Obtain a 23017 I2C GPIO expenaion IC, and get the appropriate extensions to work.
+#  (The underlying WiringPi library might even take care of this itself.)
