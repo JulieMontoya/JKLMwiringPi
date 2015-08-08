@@ -1,0 +1,65 @@
+NAME
+        JKLMwiringPi -- A Perl module for the Raspberry Pi, providing a Perl-style
+        interface to the GPIO, wrapping around the popular WiringPi library.
+
+SYNOPSIS
+        use JKLMwiringPi;
+        my $gpio = JKLMwiringPi->setup      or die "Nadgers!";
+        $gpio->pin_mode(0 => "out", 8 => "in");
+        my $led = 1;
+        while ($gpio->digital_read(8)) {
+            $gpio->digital_write(0 => $led)->ms_delay(500);
+            $led = 1 - $led;
+        };
+
+DESCRIPTION
+    This module is intended to provide a "more Perl-like" interface to the
+    GPIO pins of the Raspberry Pi.
+
+  METHODS
+       Note: I've made heavy use of => throughout, but a comma also works.
+
+       "Asking" methods return the answer asked for  (scalar or list).
+       "Telling" methods return the object itself, for concatenation.
+
+    "setup" Initialises the GPIO and returns a new gpio object, or undef if
+    unsuccessful.
+
+        my $gpio = JKLMwiringPi->setup();
+
+    "pin_mode" -- Sets one or several GPIO pins as either inputs or outputs.
+
+       $gpio->pin_mode($pin => $direction [,$pin1 => $direction1 .....]);
+       $direction may be "0", "in" or "IN"; or "1", "out" or "OUT".
+
+    "ms_delay" -- Waits for a specified time in milliseconds.
+
+       $gpio->ms_delay($duration);
+       (name clash; the underlying C function was already called "delay".)
+
+    "digital_read" -- Reads one or more digital I/O pins.
+
+       $state = $gpio->digital_read($pin);
+       @state = $gpio->digital_read($pin, $pin1, $pin2 ..... );
+       "1" means the pin is at +3.3 V, "0" means 0V.
+       If called in a list context, returns a list.
+
+    "digital_write" -- Writes one or more digital I/O pins.
+
+       $gpio->digital_write($pin => $state [, $pin1 => $state1 ..... ]);
+       $state may be "0", "off" or "OFF"; or "1", "on" or ON".
+
+    "write_vector" -- Writes several digital I/O pins at once, according to
+    a bit vector.
+
+       $gpio->write_vector($value => $units_pin, $twos_pin, $fours_pin .....)
+       Treats $value as a binary number  (bit vector)  and writes its bits to
+       several GPIO pins at once.  Pins are specified in order from LSB to MSB.
+
+LICENCE
+    This module is licenced under the Lesser GPL, version 3. Perl is an
+    interpreted language, so you are already distributing the Source Code
+    anyway :)
+
+AUTHOR
+    Julie Kirsty Louise Montoya <mailto:bluerizlagirl@gmail.com>
