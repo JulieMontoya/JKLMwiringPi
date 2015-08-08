@@ -5,8 +5,13 @@
 #  Update notes accordingly.
 #  
 #  Add a ->read_vector() method, for reading A-to-D converters and similar.
+#    (no:  Better idea!  Change the behaviour of digital_read when called in scalar context,
+#          so it creates a vector from each bit read.)
 #
-#  Turn explanatory comments into proper POD.
+#####  Turn explanatory comments into proper POD --  this is done now.
+#
+#  Create methods to set and clear pull-up and pull-down resistors on inputs.
 #
 #  Obtain a 23017 I2C GPIO expenaion IC, and get the appropriate extensions to work.
 #  (The underlying WiringPi library might even take care of this itself.)
+#
