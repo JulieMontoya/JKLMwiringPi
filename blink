@@ -1,0 +1,25 @@
+#!/usr/bin/perl -w
+use strict;
+
+use JKLMwiringPi qw/setup pin_mode ms_delay digital_read digital_write/;
+
+#  blink:  Blinks a single LED connected to GPIO pin 0.
+#          Stops when GPIO pin 8 goes low  (wire switch from here to 0V).
+
+#  Initialise GPIO
+my $gpio = JKLMwiringPi->setup;
+die "Something wrong with JKLMwiringPi->setup"                  unless $gpio;
+
+$gpio->pin_mode(0 => "out", 8 => "in");
+
+#  Main loop:  Keep going around as long as button is unpressed  (due to wiring,
+#  button shows 0 when pressed)
+
+while ($gpio->digital_read(8)) {
+    $gpio->digital_write(0 => "on")->ms_delay(500);
+    $gpio->digital_write(0 => "off")->ms_delay(500);
+};
+
+#  We know the LED will be off here, so no tidying up to do
+
+exit 0;
